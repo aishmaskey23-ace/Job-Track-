@@ -31,9 +31,16 @@ Everything is stored in the browser via `localStorage` — no backend, no sign-u
 
 ## Screenshots
 
+Dashboard View:
 ![alt text](image.png)
 
-_Add screenshots here once the app is deployed — a Dashboard view, the Applications list, and the Kanban board make the strongest first impression._
+Applications List:
+![alt text](<Screenshot 2026-09-01 231329.png>)
+![alt text](image-1.png)
+
+Kanban board:
+![alt text](image-2.png)
+
 
 ```
 screenshots/
@@ -45,7 +52,7 @@ screenshots/
 ## Installation
 
 ```bash
-git clone https://github.com/<your-username>/jobtrack.git
+git clone https://github.com/aishmaskey23-ace/Job-Track-.git
 cd jobtrack
 npm install
 npm run dev
