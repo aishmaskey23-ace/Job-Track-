@@ -2,6 +2,8 @@
 
 A Kanban-style dashboard for tracking internship and job applications — built from scratch with React to practice component design, routing, state management, and Context, and to have a real, working portfolio project rather than another to-do list clone.
 
+**Live demo:** https://job-track-lake.vercel.app/
+
 > Built by [Aish Maskey](https://github.com/aishmaskey23-ace) as a self-directed learning project while studying frontend development.
 
 ## About
