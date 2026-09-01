@@ -1,0 +1,94 @@
+/* ==========================================================
+   JobTrack design tokens
+   A pipeline-inspired palette: cool paper surfaces, an ink
+   wordmark, and one signal color (indigo) plus four status
+   colors that repeat consistently across Dashboard, the
+   Applications list, and Kanban — that repetition is the
+   through-line that ties the whole app together.
+   ========================================================== */
+
+:root {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Surfaces */
+  --bg: #f4f5fb;
+  --surface: #ffffff;
+  --surface-muted: #eceffa;
+  --border: #e1e4f0;
+
+  /* Ink */
+  --ink: #14161f;
+  --ink-soft: #5b5f76;
+  --ink-faint: #9498ac;
+  --ink-on-accent: #ffffff;
+
+  /* Signal accent */
+  --accent: #3a4dfa;
+  --accent-ink: #1c2694;
+  --accent-soft: #e8e9ff;
+  --accent-hover: #2e3fe0;
+
+  /* Status pipeline colors (Applied -> Interview -> Offer / Rejected) */
+  --status-applied: #3a4dfa;
+  --status-applied-soft: #e8e9ff;
+  --status-interview: #b8720f;
+  --status-interview-soft: #fbedd2;
+  --status-offer: #0f8f5f;
+  --status-offer-soft: #dbf5e8;
+  --status-rejected: #cf3547;
+  --status-rejected-soft: #fbe1e4;
+
+  /* Fixed dark panels (Navbar / Sidebar keep an ink shell in both themes) */
+  --panel-bg: #12131c;
+  --panel-bg-raised: #191a26;
+  --panel-border: #262837;
+  --panel-ink: #f2f3f9;
+  --panel-ink-soft: #9498b3;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(20, 22, 40, 0.06);
+  --shadow-md: 0 12px 28px rgba(20, 22, 40, 0.08);
+  --shadow-lg: 0 20px 45px rgba(20, 22, 40, 0.16);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app.dark {
+  --bg: #0a0b10;
+  --surface: #14151f;
+  --surface-muted: #1b1d2a;
+  --border: #262838;
+
+  --ink: #f2f3f9;
+  --ink-soft: #a8abc2;
+  --ink-faint: #666a80;
+  --ink-on-accent: #ffffff;
+
+  --accent: #8290ff;
+  --accent-ink: #dde0ff;
+  --accent-soft: rgba(130, 144, 255, 0.16);
+  --accent-hover: #97a3ff;
+
+  --status-applied: #8290ff;
+  --status-applied-soft: rgba(130, 144, 255, 0.16);
+  --status-interview: #f0b84e;
+  --status-interview-soft: rgba(240, 184, 78, 0.16);
+  --status-offer: #43d99b;
+  --status-offer-soft: rgba(67, 217, 155, 0.14);
+  --status-rejected: #f27b86;
+  --status-rejected-soft: rgba(242, 123, 134, 0.16);
+
+  --panel-bg: #0a0b10;
+  --panel-bg-raised: #14151f;
+  --panel-border: #1f2130;
+  --panel-ink: #f2f3f9;
+  --panel-ink-soft: #82869c;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 45px rgba(0, 0, 0, 0.55);
+}

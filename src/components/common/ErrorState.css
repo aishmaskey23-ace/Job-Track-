@@ -1,0 +1,19 @@
+.error-state {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--status-rejected);
+  background-color: var(--status-rejected-soft);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.25rem;
+}
+
+.retry-btn {
+  margin-top: 0.6rem;
+  padding: 0.45rem 1.1rem;
+  background-color: var(--status-rejected);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+}

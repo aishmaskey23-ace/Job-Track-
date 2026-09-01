@@ -1,0 +1,118 @@
+.dashboard-header {
+  margin-bottom: 1.75rem;
+}
+
+.dashboard-header h1 {
+  font-size: 1.6rem;
+}
+
+.dashboard-subtitle {
+  margin-top: 0.35rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.25rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card.tone-applied {
+  border-top-color: var(--status-applied);
+}
+
+.stat-card.tone-interview {
+  border-top-color: var(--status-interview);
+}
+
+.stat-card.tone-offer {
+  border-top-color: var(--status-offer);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.activity-section {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.activity-section h2 {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state-inline {
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  height: 170px;
+  padding-top: 0.5rem;
+}
+
+.bar-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  flex: 1;
+}
+
+.bar-count {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.bar {
+  width: 100%;
+  max-width: 36px;
+  background-color: var(--accent);
+  border-radius: 5px 5px 0 0;
+  min-height: 4px;
+  transition: height 0.3s var(--ease);
+}
+
+.bar-label {
+  margin-top: 0.55rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}

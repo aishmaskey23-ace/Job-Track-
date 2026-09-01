@@ -1,0 +1,94 @@
+.app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  background-color: var(--surface);
+  color: var(--ink);
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  width: 520px;
+  max-width: 100%;
+}
+
+.app-form-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.15rem;
+}
+
+.app-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+}
+
+.app-form-full {
+  grid-column: 1 / -1;
+}
+
+.app-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.app-form input,
+.app-form select,
+.app-form textarea {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: inherit;
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
+.app-form input:focus-visible,
+.app-form select:focus-visible,
+.app-form textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.app-form input[aria-invalid="true"] {
+  border-color: var(--status-rejected);
+}
+
+.app-form textarea {
+  resize: vertical;
+  min-height: 64px;
+}
+
+.error-text {
+  color: var(--status-rejected);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.form-actions button {
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 560px) {
+  .app-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

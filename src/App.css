@@ -1,0 +1,50 @@
+.app {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--ink);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.app-body {
+  display: flex;
+  align-items: stretch;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 2rem clamp(1.25rem, 4vw, 2.5rem);
+  min-height: calc(100vh - 60px);
+}
+
+.main-content > h1 {
+  font-size: 1.6rem;
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: 1.25rem 1rem 2rem;
+  }
+}
+
+/* Shared primary action button, used across pages/modals */
+.primary-btn {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease);
+}
+
+.primary-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.primary-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
