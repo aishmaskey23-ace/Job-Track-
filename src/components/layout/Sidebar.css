@@ -57,6 +57,7 @@
 .sidebar-icon {
   font-size: 1.05rem;
   line-height: 1;
+  display: inline-flex;
 }
 
 /* Mobile behavior */

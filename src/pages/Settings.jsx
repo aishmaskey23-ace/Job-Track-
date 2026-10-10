@@ -1,4 +1,5 @@
 import "./Settings.css";
+import { Sun, Moon } from "lucide-react";
 
 function Settings({ darkMode, toggleDarkMode }) {
   return (
@@ -17,7 +18,7 @@ function Settings({ darkMode, toggleDarkMode }) {
             className={!darkMode ? "theme-option active" : "theme-option"}
             onClick={() => darkMode && toggleDarkMode()}
           >
-            ☀️ Light
+          <Sun size={16} aria-hidden="true" /> Light
           </button>
           <button
             type="button"
@@ -26,7 +27,7 @@ function Settings({ darkMode, toggleDarkMode }) {
             className={darkMode ? "theme-option active" : "theme-option"}
             onClick={() => !darkMode && toggleDarkMode()}
           >
-            🌙 Dark
+          <Moon size={16} aria-hidden="true" /> Dark
           </button>
         </div>
       </div>

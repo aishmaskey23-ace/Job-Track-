@@ -1,0 +1,38 @@
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  display: inline-block;
+}
+
+.status-applied {
+  background-color: var(--status-applied-soft);
+  color: var(--status-applied);
+}
+
+.status-interview {
+  background-color: var(--status-interview-soft);
+  color: var(--status-interview);
+}
+
+.status-offer {
+  background-color: var(--status-offer-soft);
+  color: var(--status-offer);
+}
+
+.status-rejected {
+  background-color: var(--status-rejected-soft);
+  color: var(--status-rejected);
+}

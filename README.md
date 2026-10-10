@@ -23,6 +23,7 @@ Everything is stored in the browser via `localStorage` — no backend, no sign-u
 - **Responsive** — collapsible sidebar and stacking layouts down to mobile widths
 - **Accessible** — semantic landmarks, labeled icon buttons, visible focus states, `aria-live` form errors, and a keyboard-dismissible (Escape) modal
 
+
 ## Tech Stack
 
 - **React 19** — components, hooks, Context API
@@ -34,14 +35,14 @@ Everything is stored in the browser via `localStorage` — no backend, no sign-u
 ## Screenshots
 
 Dashboard View:
-![alt text](image.png)
+![Dashboard Image](src/images/dashboard.png)
 
 Applications List:
-![alt text](<Screenshot 2026-09-01 231329.png>)
-![alt text](image-1.png)
+![Applications list image](src/images/applicationlist.png)
+![alt txt](src/images/image.png)
 
 Kanban board:
-![alt text](image-2.png)
+![Kanban Board Image](src/images/kanbanboard.png)
 
 
 ```
@@ -103,5 +104,4 @@ A few decisions worth calling out for anyone reading the code:
 - [ ] Reminders/notifications for upcoming deadlines
 
 ## License
-
 MIT

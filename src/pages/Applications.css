@@ -28,6 +28,7 @@
 }
 
 .search-icon {
+  display: flex;
   position: absolute;
   left: 0.75rem;
   top: 50%;

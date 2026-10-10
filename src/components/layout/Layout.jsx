@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import "./Layout.css";
+import { Suspense } from "react";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 function Layout({ darkMode, toggleDarkMode, sidebarOpen, onMenuClick, username }) {
   return (
@@ -22,7 +24,9 @@ function Layout({ darkMode, toggleDarkMode, sidebarOpen, onMenuClick, username }
           />
         )}
         <main className="main-content">
-          <Outlet />
+          <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
+    <Outlet />
+  </Suspense>
         </main>
       </div>
     </div>

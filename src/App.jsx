@@ -1,14 +1,16 @@
+import { lazy, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Dashboard from "./pages/Dashboard";
-import Applications from "./pages/Applications";
-import Kanban from "./pages/Kanban";
-import Settings from "./pages/Settings";
-import ApplicationDetails from "./pages/ApplicationDetails";
 import { ApplicationProvider } from "./context/ApplicationContext";
 import useLocalStorage from "./hooks/useLocalStorage";
 import "./App.css";
-import{useState} from "react";
+
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Applications = lazy(() => import("./pages/Applications"));
+const Kanban = lazy(() => import("./pages/Kanban"));
+const Settings = lazy(() => import("./pages/Settings"));
+const ApplicationDetails = lazy(() => import("./pages/ApplicationDetails"));
+
 function App() {
   const [darkMode, setDarkMode] = useLocalStorage("jobtrack-darkmode", false);
   const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import "./ApplicationDetails.css";
 import { useApplicationContext } from "../context/ApplicationContext";
+import StatusBadge from "../components/common/StatusBadge"
 
 function ApplicationDetails() {
   const { applications } = useApplicationContext();
@@ -39,10 +40,7 @@ function ApplicationDetails() {
       <div className="details-card">
         <h1>{company}</h1>
         <h2>{position}</h2>
-        <span className={`status-badge status-${status.toLowerCase()}`}>
-          {status}
-        </span>
-
+  <StatusBadge status={status} />
         <div className="details-grid">
           <div>
             <strong>Location</strong>

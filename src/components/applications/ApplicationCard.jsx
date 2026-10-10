@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import "./ApplicationCard.css";
+import StatusBadge from "../common/StatusBadge"
 
 function ApplicationCard({ application, onDelete, onEdit }) {
   const { company, position, status, applicationDate } = application;
@@ -10,9 +11,7 @@ function ApplicationCard({ application, onDelete, onEdit }) {
       <div className="app-card-main">
         <h3 className="app-card-company">{company}</h3>
         <p className="app-card-position">{position}</p>
-        <span className={`status-badge status-${status.toLowerCase()}`}>
-          {status}
-        </span>
+        <StatusBadge status={status} />
         <p className="app-card-date">Applied: {applicationDate}</p>
       </div>
       <div className="app-card-actions">

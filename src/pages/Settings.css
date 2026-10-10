@@ -41,6 +41,7 @@
   color: var(--ink-soft);
   cursor: pointer;
   transition: background-color 0.15s var(--ease), color 0.15s var(--ease);
+  display: inline-flex; align-items: center; gap: 0.4rem;
 }
 
 .theme-option.active {

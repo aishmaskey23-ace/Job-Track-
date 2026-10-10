@@ -1,13 +1,8 @@
 import { useMemo } from "react";
-import "./Dashboard.css";
 import { useApplicationContext } from "../context/ApplicationContext";
-
-const statCards = [
-  { key: "total", label: "Total", tone: "accent" },
-  { key: "applied", label: "Applied", tone: "applied" },
-  { key: "interview", label: "Interview", tone: "interview" },
-  { key: "offer", label: "Offers", tone: "offer" },
-];
+import StatCard from "../components/dashboard/StatCard";
+import StatusDonut from "../components/dashboard/StatusDonut";
+import "./Dashboard.css";
 
 function Dashboard() {
   const { applications } = useApplicationContext();
@@ -25,6 +20,12 @@ function Dashboard() {
       { total: 0, applied: 0, interview: 0, offer: 0, rejected: 0 }
     );
   }, [applications]);
+
+  // An application that reached "Offer" must have been interviewed, so it counts too.
+  const interviewRate =
+    stats.total === 0
+      ? 0
+      : Math.round(((stats.interview + stats.offer) / stats.total) * 100);
 
   const monthlyActivity = useMemo(() => {
     const counts = {};
@@ -52,33 +53,43 @@ function Dashboard() {
       </div>
 
       <div className="stats-row">
-        {statCards.map((card) => (
-          <div className={`stat-card tone-${card.tone}`} key={card.key}>
-            <span className="stat-value">{stats[card.key]}</span>
-            <span className="stat-label">{card.label}</span>
-          </div>
-        ))}
+        <StatCard label="Total" value={stats.total} />
+        <StatCard label="Applied" value={stats.applied} tone="applied" />
+        <StatCard label="Interview" value={stats.interview} tone="interview" />
+        <StatCard label="Offers" value={stats.offer} tone="offer" />
+        <StatCard
+          label="Interview rate"
+          value={`${interviewRate}%`}
+          hint="Interview + Offer ÷ Total"
+        />
       </div>
 
-      <div className="activity-section">
-        <h2>Application Activity</h2>
-        {Object.keys(monthlyActivity).length === 0 ? (
-          <p className="empty-state-inline">No activity yet.</p>
-        ) : (
-          <div className="bar-chart">
-            {Object.entries(monthlyActivity).map(([month, count]) => (
-              <div className="bar-column" key={month}>
-                <span className="bar-count">{count}</span>
-                <div
-                  className="bar"
-                  style={{ height: `${(count / maxCount) * 100}%` }}
-                  title={`${count} application(s) in ${month}`}
-                />
-                <span className="bar-label">{month}</span>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="dashboard-charts">
+        <div className="activity-section">
+          <h2>Application Activity</h2>
+          {Object.keys(monthlyActivity).length === 0 ? (
+            <p className="empty-state-inline">No activity yet.</p>
+          ) : (
+            <div className="bar-chart">
+              {Object.entries(monthlyActivity).map(([month, count]) => (
+                <div className="bar-column" key={month}>
+                  <span className="bar-count">{count}</span>
+                  <div
+                    className="bar"
+                    style={{ height: `${(count / maxCount) * 100}%` }}
+                    title={`${count} application(s) in ${month}`}
+                  />
+                  <span className="bar-label">{month}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="distribution-section">
+          <h2>Status Breakdown</h2>
+          <StatusDonut stats={stats} />
+        </div>
       </div>
     </div>
   );

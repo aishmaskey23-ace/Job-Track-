@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { LayoutDashboard, ClipboardList, Columns3, Settings } from "lucide-react";
 import "./Sidebar.css";
 
 const navItems = [
-  { id: "dashboard", label: "Dashboard", icon: "📊", path: "/" },
-  { id: "applications", label: "Applications", icon: "📋", path: "/applications" },
-  { id: "kanban", label: "Kanban", icon: "🗂️", path: "/kanban" },
-  { id: "settings", label: "Settings", icon: "⚙️", path: "/settings" },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
+  { id: "applications", label: "Applications", icon: ClipboardList, path: "/applications" },
+  { id: "kanban", label: "Kanban", icon: Columns3, path: "/kanban" },
+  { id: "settings", label: "Settings", icon: Settings, path: "/settings" },
 ];
 
 function Sidebar({ sidebarOpen }) {
@@ -13,20 +14,25 @@ function Sidebar({ sidebarOpen }) {
     <aside className={sidebarOpen ? "sidebar open" : "sidebar"}>
       <nav aria-label="Main navigation">
         <ul className="sidebar-list">
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <NavLink
-                to={item.path}
-                end={item.path === "/"}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-item active" : "sidebar-item"
-                }
-              >
-                <span className="sidebar-icon">{item.icon}</span>
-                <span className="sidebar-label">{item.label}</span>
-              </NavLink>
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <li key={item.id}>
+                <NavLink
+                  to={item.path}
+                  end={item.path === "/"}
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-item active" : "sidebar-item"
+                  }
+                >
+                  <span className="sidebar-icon">
+                    <Icon size={18} aria-hidden="true" />
+                  </span>
+                  <span className="sidebar-label">{item.label}</span>
+                </NavLink>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </aside>

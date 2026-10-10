@@ -81,6 +81,7 @@
 }
 
 .icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
   background: none;
   border: none;
   font-size: 1.05rem;
@@ -131,7 +132,7 @@
 
 @media (max-width: 768px) {
   .menu-btn {
-    display: block;
+    display: inline-flex;
   }
 
   .navbar-username {

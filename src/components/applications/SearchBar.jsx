@@ -1,9 +1,10 @@
+import { Search } from "lucide-react";
 function SearchBar({ searchTerm, onSearchChange }) {
   return (
     <div className="search-bar-wrap">
-      <span className="search-icon" aria-hidden="true">
-        🔍
-      </span>
+     <span className="search-icon" aria-hidden="true">
+  <Search size={16} />
+</span>
       <input
         type="text"
         className="search-bar"
