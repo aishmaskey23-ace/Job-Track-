@@ -1,0 +1,164 @@
+.gs-wrapper {
+  position: relative;
+  flex: 1 1 380px;
+  max-width: 380px;
+  min-width: 0;
+  margin: 0 auto;
+}
+
+/* The icon-only trigger is for mobile; the selector is deliberately specific */
+.gs-wrapper .gs-trigger {
+  display: none;
+}
+
+.gs-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gs-icon {
+  position: absolute;
+  left: 0.7rem;
+  color: var(--panel-ink-soft);
+  pointer-events: none;
+}
+
+.gs-input {
+  width: 100%;
+  padding: 0.5rem 3.4rem 0.5rem 2.2rem;
+  background-color: var(--panel-bg-raised);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  color: var(--panel-ink);
+  font-size: 0.88rem;
+}
+
+.gs-input::placeholder {
+  color: var(--panel-ink-soft);
+}
+
+.gs-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.gs-kbd {
+  position: absolute;
+  right: 0.6rem;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--panel-ink-soft);
+  pointer-events: none;
+}
+
+.gs-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem;
+  max-height: 340px;
+  overflow-y: auto;
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 40;
+}
+
+.gs-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.gs-result.active {
+  background-color: var(--accent-soft);
+}
+
+.gs-result-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.gs-result-company {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.gs-result-position {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gs-empty {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+/* Mobile: an icon button that opens a full-width search bar under the navbar */
+@media (max-width: 768px) {
+  .gs-wrapper {
+    flex: 0 0 auto;
+    max-width: none;
+    margin: 0 0.25rem 0 auto;
+  }
+
+  .gs-wrapper .gs-trigger {
+    display: inline-flex;
+  }
+
+  .gs-input-wrap {
+    display: none;
+  }
+
+  .gs-wrapper.expanded .gs-input-wrap {
+    display: flex;
+    position: fixed;
+    top: var(--navbar-height, 60px);
+    left: 0;
+    right: 0;
+    padding: 0.6rem 0.75rem;
+    background-color: var(--panel-bg);
+    border-bottom: 1px solid var(--panel-border);
+    z-index: 40;
+  }
+
+  .gs-icon {
+    left: 1.45rem;
+  }
+
+  .gs-input {
+    padding-right: 0.75rem;
+    font-size: 16px; /* stops iOS Safari zooming in on focus */
+  }
+
+  .gs-kbd {
+    display: none;
+  }
+
+  .gs-results {
+    position: fixed;
+    top: calc(var(--navbar-height, 60px) + 60px);
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+}

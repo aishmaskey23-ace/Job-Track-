@@ -145,3 +145,43 @@
     margin-left: 0;
   }
 }
+
+/* ---------- Quick add button ---------- */
+.quick-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease);
+}
+
+.quick-add-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.quick-add-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Icon-only on tablets and phones */
+@media (max-width: 900px) {
+  .quick-add-label {
+    display: none;
+  }
+
+  .quick-add-btn {
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0.45rem;
+  }
+}

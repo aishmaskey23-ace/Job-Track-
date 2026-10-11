@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, Bell, Sun, Moon } from "lucide-react";
+import { Menu, Bell, Sun, Moon, Plus } from "lucide-react";
 import { useApplicationContext } from "../../context/ApplicationContext";
+import GlobalSearch from "./GlobalSearch";
 import "./Navbar.css";
 
 function timeAgo(iso) {
@@ -13,7 +14,13 @@ function timeAgo(iso) {
   return `${Math.floor(hours / 24)}d ago`;
 }
 
-function Navbar({ darkMode, toggleDarkMode, username = "User", onMenuClick }) {
+function Navbar({
+  darkMode,
+  toggleDarkMode,
+  username = "User",
+  onMenuClick,
+  onQuickAdd,
+}) {
   const { notifications, markAllNotificationsRead, clearNotifications } =
     useApplicationContext();
   const [showNotifications, setShowNotifications] = useState(false);
@@ -61,7 +68,18 @@ function Navbar({ darkMode, toggleDarkMode, username = "User", onMenuClick }) {
         </div>
       </div>
 
+      <GlobalSearch />
+
       <div className="navbar-right">
+        <button
+          className="quick-add-btn"
+          onClick={onQuickAdd}
+          aria-label="Add application"
+        >
+          <Plus size={16} aria-hidden="true" />
+          <span className="quick-add-label">Add Application</span>
+        </button>
+
         <div className="notif-wrapper" ref={notifRef}>
           <button
             className="icon-btn notif-btn"
