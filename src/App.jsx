@@ -10,6 +10,7 @@ const Applications = lazy(() => import("./pages/Applications"));
 const Kanban = lazy(() => import("./pages/Kanban"));
 const Settings = lazy(() => import("./pages/Settings"));
 const ApplicationDetails = lazy(() => import("./pages/ApplicationDetails"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   const [darkMode, setDarkMode] = useLocalStorage("jobtrack-darkmode", false);
@@ -38,6 +39,7 @@ function App() {
             <Route path="applications" element={<Applications />} />
             <Route path="applications/:id" element={<ApplicationDetails />} />
             <Route path="kanban" element={<Kanban />} />
+            <Route path="*" element={<NotFound />} />
             <Route
               path="settings"
               element={<Settings darkMode={darkMode} toggleDarkMode={toggleDarkMode} />}
