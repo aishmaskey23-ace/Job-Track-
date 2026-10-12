@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import useLocalStorage from "./useLocalStorage";
 import { applications as initialApplications } from "../data/applications";
+import { getDeadlineInfo, REMINDER_WINDOW_DAYS } from "../utils/deadlines";
 
 function useApplications() {
   const [applications, setApplications] = useLocalStorage(
@@ -11,7 +12,33 @@ function useApplications() {
     "jobtrack-notifications",
     []
   );
+  // Keys of deadline reminders the user has already marked as read
+  const [seenReminders, setSeenReminders] = useLocalStorage(
+    "jobtrack-seen-reminders",
+    []
+  );
   const [error, setError] = useState(null);
+
+  // Overdue, or due within the reminder window. Rejected are excluded by the helper.
+  const reminders = useMemo(() => {
+    return applications
+      .map((app) => {
+        const info = getDeadlineInfo(app);
+        if (!info || info.days > REMINDER_WINDOW_DAYS) return null;
+        // Changing state (soon -> overdue) produces a new key, so it becomes unread again
+        const key = `${app.id}-${app.deadline}-${info.days < 0 ? "overdue" : "soon"}`;
+        return {
+          id: `reminder-${key}`,
+          key,
+          days: info.days,
+          tone: info.tone,
+          message: `${app.company}: ${info.label}`,
+          read: seenReminders.includes(key),
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.days - b.days);
+  }, [applications, seenReminders]);
 
   function addNotification(message) {
     const newNotification = {
@@ -20,12 +47,12 @@ function useApplications() {
       createdAt: new Date().toISOString(),
       read: false,
     };
-    // newest first, keep only the latest 20
     setNotifications((prev) => [newNotification, ...prev].slice(0, 20));
   }
 
   function markAllNotificationsRead() {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    setSeenReminders(reminders.map((r) => r.key));
   }
 
   function clearNotifications() {
@@ -91,6 +118,7 @@ function useApplications() {
   return {
     applications,
     notifications,
+    reminders,
     markAllNotificationsRead,
     clearNotifications,
     error,

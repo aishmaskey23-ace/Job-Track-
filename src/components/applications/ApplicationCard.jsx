@@ -1,7 +1,8 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import "./ApplicationCard.css";
-import StatusBadge from "../common/StatusBadge"
+import StatusBadge from "../common/StatusBadge";
+import DeadlineChip from "../common/DeadlineChip";
 
 function ApplicationCard({ application, onDelete, onEdit }) {
   const { company, position, status, applicationDate } = application;
@@ -11,7 +12,10 @@ function ApplicationCard({ application, onDelete, onEdit }) {
       <div className="app-card-main">
         <h3 className="app-card-company">{company}</h3>
         <p className="app-card-position">{position}</p>
-        <StatusBadge status={status} />
+       <div className="app-card-badges">
+      <StatusBadge status={status} />
+      <DeadlineChip application={application} />
+    </div>
         <p className="app-card-date">Applied: {applicationDate}</p>
       </div>
       <div className="app-card-actions">

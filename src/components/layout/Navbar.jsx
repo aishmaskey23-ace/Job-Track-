@@ -21,12 +21,13 @@ function Navbar({
   onMenuClick,
   onQuickAdd,
 }) {
-  const { notifications, markAllNotificationsRead, clearNotifications } =
+  const { notifications, reminders, markAllNotificationsRead, clearNotifications } =
     useApplicationContext();
   const [showNotifications, setShowNotifications] = useState(false);
   const notifRef = useRef(null);
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length  +
+    reminders.filter((r) => !r.read).length;
 
   useEffect(() => {
     if (!showNotifications) return;
@@ -96,22 +97,35 @@ function Navbar({
             )}
           </button>
 
-          {showNotifications && (
+                  {showNotifications && (
             <div className="notif-dropdown" role="region" aria-label="Notifications">
               <div className="notif-header">
                 <h3>Notifications</h3>
-                {notifications.length > 0 && (
+                {(notifications.length > 0 || reminders.length > 0) && (
                   <div className="notif-actions">
                     <button onClick={markAllNotificationsRead}>Mark all read</button>
-                    <button onClick={clearNotifications}>Clear</button>
+                    {notifications.length > 0 && (
+                      <button onClick={clearNotifications}>Clear</button>
+                    )}
                   </div>
                 )}
               </div>
 
-              {notifications.length === 0 ? (
+              {notifications.length === 0 && reminders.length === 0 ? (
                 <p className="notif-empty">No notifications yet.</p>
               ) : (
                 <ul className="notif-list">
+                  {reminders.map((r) => (
+                    <li
+                      key={r.id}
+                      className={`notif-item notif-reminder reminder-${r.tone}${
+                        r.read ? "" : " unread"
+                      }`}
+                    >
+                      <p>{r.message}</p>
+                      <span>Deadline reminder</span>
+                    </li>
+                  ))}
                   {notifications.map((n) => (
                     <li
                       key={n.id}

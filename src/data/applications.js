@@ -1,6 +1,7 @@
-// Shape of a single job application, plus demo data so the
-// dashboard, charts and Kanban board look populated on first load.
-// This is sample data, not real applications.
+// Shape of a single job application, plus demo data so the dashboard,
+// charts and Kanban board look populated on first load.
+// Sample data only. Dates are generated relative to today so the
+// deadline features always have something realistic to show.
 
 /**
  * @typedef {Object} Application
@@ -16,6 +17,16 @@
  * @property {string} notes - Free-text notes
  */
 
+// "YYYY-MM-DD" for (today + offset days), in the user's local time
+function daysFromToday(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 /** @type {Application[]} */
 export const applications = [
   {
@@ -25,8 +36,8 @@ export const applications = [
     location: "Remote",
     jobType: "Internship",
     status: "Rejected",
-    applicationDate: "2026-05-12",
-    deadline: "2026-05-30",
+    applicationDate: daysFromToday(-150),
+    deadline: daysFromToday(-125),
     jobUrl: "https://www.shopify.com/careers",
     notes: "Rejected after the take-home assessment. Review accessibility basics before the next application.",
   },
@@ -37,8 +48,8 @@ export const applications = [
     location: "New York, NY",
     jobType: "Internship",
     status: "Rejected",
-    applicationDate: "2026-05-20",
-    deadline: "2026-06-05",
+    applicationDate: daysFromToday(-138),
+    deadline: daysFromToday(-118),
     jobUrl: "https://www.lifeatspotify.com",
     notes: "Automated rejection email. Tailor the resume to highlight React projects.",
   },
@@ -49,10 +60,10 @@ export const applications = [
     location: "Remote",
     jobType: "Internship",
     status: "Interview",
-    applicationDate: "2026-06-08",
-    deadline: "2026-06-30",
+    applicationDate: daysFromToday(-92),
+    deadline: daysFromToday(2),
     jobUrl: "https://stripe.com/jobs",
-    notes: "Technical screen done. Waiting on the onsite schedule. Practice component design questions.",
+    notes: "Technical screen done. Confirm the onsite slot before the deadline.",
   },
   {
     id: 4,
@@ -61,10 +72,10 @@ export const applications = [
     location: "Remote",
     jobType: "Internship",
     status: "Applied",
-    applicationDate: "2026-06-22",
-    deadline: "2026-07-15",
+    applicationDate: daysFromToday(-75),
+    deadline: daysFromToday(-2),
     jobUrl: "https://www.atlassian.com/company/careers",
-    notes: "Applied through a referral from the university career fair.",
+    notes: "No response yet and the posting has closed. Follow up with the referrer.",
   },
   {
     id: 5,
@@ -73,8 +84,8 @@ export const applications = [
     location: "San Francisco, CA",
     jobType: "Internship",
     status: "Interview",
-    applicationDate: "2026-07-06",
-    deadline: "2026-07-31",
+    applicationDate: daysFromToday(-58),
+    deadline: daysFromToday(6),
     jobUrl: "https://www.figma.com/careers",
     notes: "Recruiter call went well. Prepare a walkthrough of JobTrack and its design-token system.",
   },
@@ -85,10 +96,10 @@ export const applications = [
     location: "Remote",
     jobType: "Internship",
     status: "Offer",
-    applicationDate: "2026-07-18",
-    deadline: "2026-08-10",
+    applicationDate: daysFromToday(-41),
+    deadline: daysFromToday(1),
     jobUrl: "https://vercel.com/careers",
-    notes: "Offer received. Reply by the end of the month and compare against other offers.",
+    notes: "Offer received. Reply by the deadline and compare against other offers.",
   },
   {
     id: 7,
@@ -97,10 +108,10 @@ export const applications = [
     location: "Mountain View, CA",
     jobType: "Internship",
     status: "Interview",
-    applicationDate: "2026-08-04",
-    deadline: "2026-08-28",
+    applicationDate: daysFromToday(-27),
+    deadline: daysFromToday(12),
     jobUrl: "https://careers.google.com",
-    notes: "First-round interview scheduled next week. Review React hooks and JavaScript fundamentals.",
+    notes: "First-round interview scheduled. Review React hooks and JavaScript fundamentals.",
   },
   {
     id: 8,
@@ -109,8 +120,8 @@ export const applications = [
     location: "Redmond, WA",
     jobType: "Internship",
     status: "Offer",
-    applicationDate: "2026-08-15",
-    deadline: "2026-09-05",
+    applicationDate: daysFromToday(-14),
+    deadline: daysFromToday(20),
     jobUrl: "https://careers.microsoft.com",
     notes: "Verbal offer after the final round. Waiting on the written offer letter.",
   },
@@ -121,8 +132,8 @@ export const applications = [
     location: "Menlo Park, CA",
     jobType: "Full-time",
     status: "Applied",
-    applicationDate: "2026-09-28",
-    deadline: "2026-10-30",
+    applicationDate: daysFromToday(-6),
+    deadline: daysFromToday(9),
     jobUrl: "https://www.metacareers.com",
     notes: "Submitted with portfolio and live demo link.",
   },
@@ -133,8 +144,8 @@ export const applications = [
     location: "Seattle, WA",
     jobType: "Full-time",
     status: "Applied",
-    applicationDate: "2026-10-02",
-    deadline: "2026-10-25",
+    applicationDate: daysFromToday(-2),
+    deadline: daysFromToday(26),
     jobUrl: "https://www.amazon.jobs",
     notes: "Online assessment link expected within two weeks.",
   },

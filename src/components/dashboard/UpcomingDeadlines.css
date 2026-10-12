@@ -1,0 +1,93 @@
+.deadlines-section {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1rem;
+}
+
+.deadlines-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.deadlines-header h2 {
+  font-size: 1.05rem;
+}
+
+.deadlines-overdue-note {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--status-rejected);
+}
+
+.deadlines-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.deadline-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0.5rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.15s var(--ease);
+}
+
+.deadline-row:hover {
+  background-color: var(--surface-muted);
+}
+
+.deadline-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.deadline-row-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.deadline-company {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.deadline-position {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deadline-date {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .deadlines-section {
+    padding: 1.1rem;
+  }
+
+  .deadline-row {
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+  }
+
+  .deadline-row-main {
+    flex-basis: 100%;
+  }
+}

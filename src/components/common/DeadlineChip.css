@@ -1,0 +1,25 @@
+.deadline-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.deadline-overdue {
+  background-color: var(--status-rejected-soft);
+  color: var(--status-rejected);
+}
+
+.deadline-soon {
+  background-color: var(--status-interview-soft);
+  color: var(--status-interview);
+}
+
+.deadline-later {
+  background-color: var(--surface-muted);
+  color: var(--ink-soft);
+}

@@ -3,6 +3,7 @@ import { useApplicationContext } from "../context/ApplicationContext";
 import StatCard from "../components/dashboard/StatCard";
 import StatusDonut from "../components/dashboard/StatusDonut";
 import "./Dashboard.css";
+import UpcomingDeadlines from "../components/dashboard/UpcomingDeadlines";
 
 function Dashboard() {
   const { applications } = useApplicationContext();
@@ -63,7 +64,7 @@ function Dashboard() {
           hint="Interview + Offer ÷ Total"
         />
       </div>
-
+  <UpcomingDeadlines applications={applications} />
       <div className="dashboard-charts">
         <div className="activity-section">
           <h2>Application Activity</h2>

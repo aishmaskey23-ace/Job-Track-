@@ -22,6 +22,7 @@ Everything is stored in the browser via `localStorage` — no backend, no sign-u
 - **Dark mode** — toggleable from the navbar or Settings, persisted across sessions
 - **Responsive** — collapsible sidebar and stacking layouts down to mobile widths
 - **Accessible** — semantic landmarks, labeled icon buttons, visible focus states, `aria-live` form errors, and a keyboard-dismissible (Escape) modal
+- Deadline awareness: an upcoming-deadlines card, overdue and due-soon chips, and deadline reminders in the notification bell.
 
 
 ## Tech Stack
@@ -101,7 +102,7 @@ A few decisions worth calling out for anyone reading the code:
 - [ ] Swap `localStorage` for a real backend (auth + a database) so data syncs across devices
 - [ ] Automated tests (Vitest + React Testing Library)
 - [ ] CSV export of applications
-- [ ] Reminders/notifications for upcoming deadlines
+
 
 ## License
 MIT

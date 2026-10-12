@@ -185,3 +185,10 @@
     padding: 0.45rem;
   }
 }
+.notif-item.notif-reminder.reminder-soon {
+  border-left: 3px solid var(--status-interview);
+}
+
+.notif-item.notif-reminder.reminder-overdue {
+  border-left: 3px solid var(--status-rejected);
+}
