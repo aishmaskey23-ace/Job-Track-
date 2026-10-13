@@ -13,8 +13,10 @@ const emptyForm = {
   notes: "",
 };
 
-function ApplicationForm({ initialData, onSubmit, onCancel }) {
-  const [formData, setFormData] = useState(initialData || emptyForm);
+function ApplicationForm({ initialData, prefill, onSubmit, onCancel }) {
+  const [formData, setFormData] = useState(
+    initialData || { ...emptyForm, ...prefill }
+  );
   const [errors, setErrors] = useState({});
   const firstFieldRef = useRef(null);
 

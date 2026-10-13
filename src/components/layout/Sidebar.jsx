@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, ClipboardList, Columns3, Settings } from "lucide-react";
+import { LayoutDashboard, ClipboardList, Columns3, Compass, Settings } from "lucide-react";
 import "./Sidebar.css";
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
   { id: "applications", label: "Applications", icon: ClipboardList, path: "/applications" },
   { id: "kanban", label: "Kanban", icon: Columns3, path: "/kanban" },
   { id: "settings", label: "Settings", icon: Settings, path: "/settings" },
+  { id: "discover", label: "Discover", icon: Compass, path: "/discover" }
 ];
 
 function Sidebar({ sidebarOpen }) {
