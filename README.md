@@ -19,15 +19,15 @@ Your applications are stored in the browser via `localStorage` — no backend, n
 ## Features
 
 - **Dashboard** — stat cards (total, applied, interview, offers, interview rate), a monthly activity bar chart, a status breakdown donut chart, and an upcoming-deadlines card, all computed live from your data
-- **Discover Jobs** — live remote software listings from the [Remotive](https://remotive.com) API, with search, job-type and location filters, loading and error states with retry, and a one-click "Add to tracker" that pre-fills the application form
-- **Applications list** — full CRUD (add, view, edit, delete), with search by company, filter by status, and five sort options
+- **Discover Jobs** — live remote software listings from the [Remotive](https://remotive.com) API, with search, job-type and location filters, loading and error states with retry, listings that stay visible while a refresh runs in the background, and a one-click "Add to tracker" that pre-fills the application form
+- **Applications list** — full CRUD (add, view, edit, delete), with search by company, filter by status, and five sort options; the form validates required fields and accepts only `http(s)` job links, and the application date defaults to today
 - **Kanban board** — drag and drop applications between status columns
-- **Application details** — a dedicated page per application with its own URL (`/applications/:id`) that survives a refresh and can be bookmarked in the same browser
-- **Deadline awareness** — overdue and due-soon chips, an upcoming-deadlines card, and reminders in the notification bell (rejected applications are excluded)
+- **Application details** — a dedicated page per application with readable dates and Edit and Delete actions. Its URL (`/applications/:id`) survives a refresh and can be bookmarked in the same browser, and the Back button never leaves the site
+- **Deadline awareness** — overdue and due-soon chips, an upcoming-deadlines card, and reminders in the notification bell (rejected and offer-stage applications are excluded)
 - **Notifications** — a bell with an unread badge for new applications, status changes, and approaching deadlines
 - **Quick add and global search** — add an application from any page, and press `Ctrl/⌘ + K` to search every application with arrow-key navigation
-- **Persistent storage** — applications, notifications, and your theme survive a page refresh via `localStorage`
-- **Dark mode** — toggleable from the navbar or Settings, persisted across sessions
+- **Settings and dark mode** — set your display name and switch between light and dark themes (from the navbar or Settings); both are remembered between visits
+- **Persistent storage** — applications, notifications, your display name, and your theme survive a page refresh via `localStorage`
 - **Responsive** — a drawer sidebar on mobile, stacking layouts, and touch-friendly tap targets from phone to desktop widths
 - **Accessible** — semantic landmarks, labeled controls, visible focus styles, dialogs with accessible names, focus trapping and focus return, `role="alert"` form errors, a text alternative for the SVG chart, an ARIA combobox for search, and modals and dropdowns that close with Escape
 - **Fast page loads** — each page is code-split with `React.lazy` and loads behind a spinner
@@ -46,17 +46,23 @@ Your applications are stored in the browser via `localStorage` — no backend, n
 ## Screenshots
 
 **Dashboard**
+
 ![JobTrack dashboard](src/images/dashboard.png)
-![dashboard continued](src/images/dashboard%20continue.png)
+
+![Dashboard, continued](src/images/dashboard%20continue.png)
 
 **Applications list**
+
 ![Applications list](src/images/applicationlist.png)
-![Application cards and filters](src/images/addapplication.png)
+
+![Add application form](src/images/addapplication.png)
 
 **Kanban board**
+
 ![Kanban board](src/images/kanban.png)
 
 **Discover Jobs**
+
 ![Discover Jobs page](src/images/discover.png)
 
 ## Installation
@@ -97,7 +103,7 @@ src/
 ├── pages/              # Dashboard, Applications, ApplicationDetails, Kanban,
 │                       # Discover, Settings, NotFound
 ├── styles/             # Design tokens and responsive rules
-└── utils/              # Deadline and job-listing helpers
+└── utils/              # Date, deadline, URL, and job-listing helpers
 vercel.json             # SPA rewrite for deep links
 ```
 
@@ -108,17 +114,19 @@ A few decisions worth calling out for anyone reading the code:
 - **State lives in one place.** `useApplications` (a custom hook) owns all application data, CRUD logic, and notifications, persisted via a second custom hook, `useLocalStorage`. `ApplicationContext` exposes it to every page without prop-drilling.
 - **Derived data is never stored.** Dashboard stats, the interview rate, both charts, deadline reminders, and the "Tracked" badge on Discover cards are all computed from state rather than kept as separate state that could drift out of sync.
 - **Interview rate is defined deliberately.** It is (Interview + Offer) ÷ Total: an application at the Offer stage has necessarily been interviewed. Rejected applications are excluded, since the app can't tell whether they were rejected before or after an interview.
-- **Charts are hand-built.** The bar chart uses CSS, and the donut chart is plain SVG using `stroke-dasharray` and `stroke-dashoffset` — no charting library.
-- **Fetching respects the API's rules.** Remotive asks for only a handful of requests per day, so `useRemoteJobs` fetches a single batch, caches it in `localStorage` for 6 hours, and does all searching and filtering in the browser. A shared in-flight promise prevents duplicate requests, effect cleanup ignores stale responses, and network, HTTP, and malformed-response failures each produce a clear error with a retry button.
-- **Dates are handled in local time.** ISO date strings are parsed as local dates, since `new Date("2026-10-24")` is read as UTC and can show the wrong day depending on the user's timezone. Sample data dates are generated relative to a visitor's first visit, so the deadline features show realistic results on first load; after that they're saved like any other data.
+- **Charts are hand-built.** The bar chart uses CSS and groups applications by year and month, and the donut chart is plain SVG using `stroke-dasharray` and `stroke-dashoffset` — no charting library.
+- **Fetching respects the API's rules.** Remotive asks for only a handful of requests per day, so `useRemoteJobs` fetches a single batch and does all searching and filtering in the browser. Only the fields the page displays are cached for 6 hours, because the API's full HTML descriptions would approach the browser's `localStorage` limit. Expired listings stay on screen while a fresh copy loads in the background. A shared in-flight promise prevents duplicate requests, a 15-second timeout stops a hung connection from spinning forever, effect cleanup ignores stale responses, and network, HTTP, timeout, and malformed-response failures each produce a clear error with a retry button.
+- **Dates are handled in local time.** ISO date strings are parsed as local dates, since `new Date("2026-10-24")` is read as UTC and can show the wrong day depending on the user's timezone. Sorting treats empty dates as "last" instead of producing an unpredictable order. Sample data dates are generated relative to a visitor's first visit, so the deadline features show realistic results on first load; after that they're saved like any other data.
 - **Reusable components.** `StatusBadge`, `StatCard`, `DeadlineChip`, and `JobCard` are shared across pages, and one `Modal` wrapper serves the add/edit form, the delete confirmation, and the Discover "Add to tracker" flow. `ApplicationForm` handles adding, editing, and pre-filled adds depending on the props it receives.
 - **Performance is targeted, not blanket.** `React.memo` on `ApplicationCard` plus `useCallback` on the handlers passed into it stop the whole list re-rendering on every keystroke in the search box. Routes are code-split with `React.lazy` and `Suspense`.
 - **Kanban drag-and-drop uses the native HTML5 API** (`draggable`, `onDragStart`, `onDrop`), not a library — a deliberate choice to practice the underlying browser API.
 
 ## Data and attribution
-Job listings on the Discover page are provided by [Remotive](https://remotive.com). Listings are delayed by 24 hours and cached for up to 6 hours, and every card links back to its original Remotive posting. The applications shown on first load are sample data.
+
+Job listings on the Discover page are provided by [Remotive](https://remotive.com). Listings are delayed by 24 hours and cached for up to 6 hours (only the displayed fields are stored), and every card links back to its original Remotive posting. The applications shown on first load are sample data.
 
 ## Future Improvements
+
 - [ ] Automated tests (Vitest + React Testing Library) and a CI workflow
 - [ ] Swap `localStorage` for a real backend (auth + a database) so data syncs across devices
 - [ ] CSV export and JSON backup/restore of applications
@@ -127,4 +135,5 @@ Job listings on the Discover page are provided by [Remotive](https://remotive.co
 - [ ] Keyboard- and touch-friendly alternative to Kanban's drag-and-drop (e.g. a "Move to" menu per card), since native HTML5 drag-and-drop doesn't work on touch screens or with a keyboard
 
 ## License
+
 MIT

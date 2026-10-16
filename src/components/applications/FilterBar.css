@@ -1,0 +1,45 @@
+.filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.filter-field select {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  background-color: var(--surface);
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.filter-field select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+@media (max-width: 640px) {
+  .filter-bar {
+    width: 100%;
+  }
+
+  .filter-field {
+    flex: 1;
+  }
+
+  .filter-field select {
+    width: 100%;
+  }
+}

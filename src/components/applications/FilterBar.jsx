@@ -1,3 +1,4 @@
+import "./FilterBar.css";
 function FilterBar({ statusFilter, onStatusChange, sortBy, onSortChange }) {
   return (
     <div className="filter-bar">
