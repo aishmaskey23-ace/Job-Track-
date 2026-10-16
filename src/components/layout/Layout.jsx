@@ -7,9 +7,10 @@ import ApplicationForm from "../applications/ApplicationForm";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { useApplicationContext } from "../../context/ApplicationContext";
 import "./Layout.css";
+import ErrorState from "../common/ErrorState";
 
 function Layout({ darkMode, toggleDarkMode, sidebarOpen, onMenuClick, username }) {
-  const { addApplication } = useApplicationContext();
+  const { addApplication, error, setError } = useApplicationContext();
   const [showQuickAdd, setShowQuickAdd] = useState(false);
 
   function handleQuickAdd(formData) {
@@ -38,7 +39,15 @@ function Layout({ darkMode, toggleDarkMode, sidebarOpen, onMenuClick, username }
             aria-hidden="true"
           />
         )}
+
         <main className="main-content">
+                    {error && (
+            <ErrorState
+              message={error}
+              onRetry={() => setError(null)}
+              retryLabel="Dismiss"
+            />
+          )}
           <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
             <Outlet />
           </Suspense>

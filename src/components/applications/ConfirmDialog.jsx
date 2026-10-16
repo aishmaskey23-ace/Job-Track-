@@ -3,11 +3,18 @@ import "./ConfirmDialog.css";
 
 function ConfirmDialog({ message, onConfirm, onCancel }) {
   return (
-    <Modal onClose={onCancel}>
+    <Modal
+      onClose={onCancel}
+      labelledBy="confirm-dialog-message"
+      role="alertdialog"
+    >
       <div className="confirm-dialog">
-        <p>{message}</p>
+        <p id="confirm-dialog-message">{message}</p>
         <div className="confirm-actions">
-          <button onClick={onCancel}>Cancel</button>
+          {/* Focus starts on the safe choice */}
+          <button onClick={onCancel} autoFocus>
+            Cancel
+          </button>
           <button className="danger" onClick={onConfirm}>
             Delete
           </button>

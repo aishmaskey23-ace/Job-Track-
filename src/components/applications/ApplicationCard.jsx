@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./ApplicationCard.css";
 import StatusBadge from "../common/StatusBadge";
 import DeadlineChip from "../common/DeadlineChip";
+import { formatDate } from "../../utils/deadlines";
 
 function ApplicationCard({ application, onDelete, onEdit }) {
   const { company, position, status, applicationDate } = application;
@@ -16,7 +17,7 @@ function ApplicationCard({ application, onDelete, onEdit }) {
       <StatusBadge status={status} />
       <DeadlineChip application={application} />
     </div>
-        <p className="app-card-date">Applied: {applicationDate}</p>
+      <p className="app-card-date">Applied: {formatDate(applicationDate)}</p>
       </div>
       <div className="app-card-actions">
         <Link to={`/applications/${application.id}`}>View</Link>

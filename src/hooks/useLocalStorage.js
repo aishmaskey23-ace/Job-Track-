@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function useLocalStorage(key, initialValue) {
+function useLocalStorage(key, initialValue, onError) {
   const [value, setValue] = useState(() => {
     try {
       const stored = localStorage.getItem(key);
@@ -16,8 +16,9 @@ function useLocalStorage(key, initialValue) {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.error(`Error writing localStorage key "${key}":`, error);
+      if (onError) onError(error);
     }
-  }, [key, value]);
+  }, [key, value, onError]);
 
   return [value, setValue];
 }

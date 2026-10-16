@@ -64,9 +64,9 @@
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 0;
+    top: 60px;
     left: 0;
-    height: 100vh;
+    height: calc(100vh - 60px); 
     transform: translateX(-100%);
     z-index: 20;
     transition: transform 0.25s var(--ease);

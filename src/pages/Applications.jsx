@@ -6,11 +6,20 @@ import FilterBar from "../components/applications/FilterBar";
 import ApplicationForm from "../components/applications/ApplicationForm";
 import Modal from "../components/applications/Modal";
 import ConfirmDialog from "../components/applications/ConfirmDialog";
-import ErrorState from "../components/common/ErrorState";
+
 import "./Applications.css";
 
+// Compares two "YYYY-MM-DD" strings. Empty dates always sort last.
+function compareDates(a, b, direction = "asc") {
+  if (!a && !b) return 0;
+  if (!a) return 1;
+  if (!b) return -1;
+  const result = a < b ? -1 : a > b ? 1 : 0;
+  return direction === "asc" ? result : -result;
+}
+
 function Applications() {
-  const { applications, addApplication, updateApplication, deleteApplication, error, setError } =
+  const { applications, addApplication, updateApplication, deleteApplication} =
     useApplicationContext();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,15 +42,15 @@ function Applications() {
       .sort((a, b) => {
         switch (sortBy) {
           case "newest":
-            return new Date(b.applicationDate) - new Date(a.applicationDate);
+            return compareDates(a.applicationDate, b.applicationDate, "desc");
           case "oldest":
-            return new Date(a.applicationDate) - new Date(b.applicationDate);
+            return compareDates(a.applicationDate, b.applicationDate, "asc");
           case "company-asc":
             return a.company.localeCompare(b.company);
           case "company-desc":
             return b.company.localeCompare(a.company);
           case "deadline":
-            return new Date(a.deadline) - new Date(b.deadline);
+            return compareDates(a.deadline, b.deadline, "asc");
           default:
             return 0;
         }
@@ -98,7 +107,6 @@ function Applications() {
         </button>
       </div>
 
-      {error && <ErrorState message={error} onRetry={() => setError(null)} />}
 
       <div className="applications-toolbar">
         <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />

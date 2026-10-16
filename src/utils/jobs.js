@@ -1,3 +1,6 @@
+import { todayISO } from "./deadlines";
+
+// Helpers for turning Remotive API listings into JobTrack data.
 
 // API job_type -> label shown on cards
 export const JOB_TYPE_LABELS = {
@@ -17,11 +20,21 @@ const FORM_JOB_TYPES = {
   internship: "Internship",
 };
 
-function todayISO() {
-  const d = new Date();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${month}-${day}`;
+// Keep only the fields the Discover page uses. The API also returns full HTML
+// descriptions, which would make the cached data very large.
+export function slimJob(job) {
+  return {
+    id: job.id,
+    url: job.url,
+    title: job.title,
+    company_name: job.company_name,
+    company_logo: job.company_logo,
+    job_type: job.job_type,
+    publication_date: job.publication_date,
+    candidate_required_location: job.candidate_required_location,
+    salary: job.salary,
+    tags: Array.isArray(job.tags) ? job.tags.slice(0, 12) : [],
+  };
 }
 
 // Pre-fills the application form from a listing. The user can still edit everything.

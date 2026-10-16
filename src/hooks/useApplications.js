@@ -1,23 +1,34 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import useLocalStorage from "./useLocalStorage";
 import { applications as initialApplications } from "../data/applications";
 import { getDeadlineInfo, REMINDER_WINDOW_DAYS } from "../utils/deadlines";
 
 function useApplications() {
+  const [error, setError] = useState(null);
+
+  // Called by useLocalStorage when a save fails (storage full or blocked)
+  const handleStorageError = useCallback(() => {
+    setError(
+      "Couldn't save your changes. They may be lost when you refresh or close this tab."
+    );
+  }, []);
+
   const [applications, setApplications] = useLocalStorage(
     "jobtrack-applications",
-    initialApplications
+    initialApplications,
+    handleStorageError
   );
   const [notifications, setNotifications] = useLocalStorage(
     "jobtrack-notifications",
-    []
+    [],
+    handleStorageError
   );
   // Keys of deadline reminders the user has already marked as read
   const [seenReminders, setSeenReminders] = useLocalStorage(
     "jobtrack-seen-reminders",
-    []
+    [],
+    handleStorageError
   );
-  const [error, setError] = useState(null);
 
   // Overdue, or due within the reminder window. Rejected are excluded by the helper.
   const reminders = useMemo(() => {
@@ -25,7 +36,6 @@ function useApplications() {
       .map((app) => {
         const info = getDeadlineInfo(app);
         if (!info || info.days > REMINDER_WINDOW_DAYS) return null;
-        // Changing state (soon -> overdue) produces a new key, so it becomes unread again
         const key = `${app.id}-${app.deadline}-${info.days < 0 ? "overdue" : "soon"}`;
         return {
           id: `reminder-${key}`,
@@ -60,58 +70,41 @@ function useApplications() {
   }
 
   function addApplication(newApp) {
-    try {
-      const newApplication = { ...newApp, id: Date.now() };
-      setApplications((prev) => [...prev, newApplication]);
-      addNotification(
-        `New application added: ${newApp.position} at ${newApp.company} (${newApp.status})`
-      );
-    } catch {
-      setError("Failed to add application.");
-    }
+    setApplications((prev) => [...prev, { ...newApp, id: Date.now() }]);
+    addNotification(
+      `New application added: ${newApp.position} at ${newApp.company} (${newApp.status})`
+    );
   }
 
   function updateApplication(id, updatedFields) {
-    try {
-      const existing = applications.find((app) => app.id === id);
-      setApplications((prev) =>
-        prev.map((app) => (app.id === id ? { ...app, ...updatedFields } : app))
+    const existing = applications.find((app) => app.id === id);
+    setApplications((prev) =>
+      prev.map((app) => (app.id === id ? { ...app, ...updatedFields } : app))
+    );
+    if (
+      existing &&
+      updatedFields.status &&
+      updatedFields.status !== existing.status
+    ) {
+      addNotification(
+        `${existing.company} moved from ${existing.status} to ${updatedFields.status}`
       );
-      if (
-        existing &&
-        updatedFields.status &&
-        updatedFields.status !== existing.status
-      ) {
-        addNotification(
-          `${existing.company} moved from ${existing.status} to ${updatedFields.status}`
-        );
-      }
-    } catch {
-      setError("Failed to update application.");
     }
   }
 
   function deleteApplication(id) {
-    try {
-      setApplications((prev) => prev.filter((app) => app.id !== id));
-    } catch {
-      setError("Failed to delete application.");
-    }
+    setApplications((prev) => prev.filter((app) => app.id !== id));
   }
 
   function changeStatus(id, newStatus) {
-    try {
-      const existing = applications.find((app) => app.id === id);
-      setApplications((prev) =>
-        prev.map((app) => (app.id === id ? { ...app, status: newStatus } : app))
+    const existing = applications.find((app) => app.id === id);
+    setApplications((prev) =>
+      prev.map((app) => (app.id === id ? { ...app, status: newStatus } : app))
+    );
+    if (existing && existing.status !== newStatus) {
+      addNotification(
+        `${existing.company} moved from ${existing.status} to ${newStatus}`
       );
-      if (existing && existing.status !== newStatus) {
-        addNotification(
-          `${existing.company} moved from ${existing.status} to ${newStatus}`
-        );
-      }
-    } catch {
-      setError("Failed to update status.");
     }
   }
 

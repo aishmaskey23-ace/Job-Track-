@@ -121,6 +121,11 @@
   color: var(--ink-faint);
   line-height: 1.5;
 }
+.discover-refreshing {
+  margin-bottom: 0.9rem;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
 
 @media (max-width: 640px) {
   .discover-toolbar {

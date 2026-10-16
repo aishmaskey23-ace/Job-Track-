@@ -1,10 +1,26 @@
-import "./Settings.css";
 import { Sun, Moon } from "lucide-react";
+import "./Settings.css";
 
-function Settings({ darkMode, toggleDarkMode }) {
+function Settings({ darkMode, toggleDarkMode, username, onUsernameChange }) {
   return (
     <div className="settings-page">
       <h1>Settings</h1>
+
+      <div className="settings-section">
+        <h2>Profile</h2>
+        <p className="settings-hint">The name shown in the navbar.</p>
+
+        <label className="settings-field">
+          <span>Display name</span>
+          <input
+            type="text"
+            value={username}
+            maxLength={30}
+            placeholder="Your name"
+            onChange={(e) => onUsernameChange(e.target.value)}
+          />
+        </label>
+      </div>
 
       <div className="settings-section">
         <h2>Appearance</h2>
@@ -18,7 +34,7 @@ function Settings({ darkMode, toggleDarkMode }) {
             className={!darkMode ? "theme-option active" : "theme-option"}
             onClick={() => darkMode && toggleDarkMode()}
           >
-          <Sun size={16} aria-hidden="true" /> Light
+            <Sun size={16} aria-hidden="true" /> Light
           </button>
           <button
             type="button"
@@ -27,7 +43,7 @@ function Settings({ darkMode, toggleDarkMode }) {
             className={darkMode ? "theme-option active" : "theme-option"}
             onClick={() => !darkMode && toggleDarkMode()}
           >
-          <Moon size={16} aria-hidden="true" /> Dark
+            <Moon size={16} aria-hidden="true" /> Dark
           </button>
         </div>
       </div>

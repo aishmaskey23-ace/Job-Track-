@@ -44,3 +44,6 @@
     max-height: 85vh;
   }
 }
+.modal-content:focus {
+  outline: none;
+}

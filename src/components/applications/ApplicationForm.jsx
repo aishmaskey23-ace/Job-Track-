@@ -1,21 +1,25 @@
 import { useState, useRef, useEffect } from "react";
+import { todayISO } from "../../utils/deadlines";
+import { isHttpUrl } from "../../utils/url";
 import "./ApplicationForm.css";
 
-const emptyForm = {
-  company: "",
-  position: "",
-  location: "",
-  jobType: "Internship",
-  status: "Applied",
-  applicationDate: "",
-  deadline: "",
-  jobUrl: "",
-  notes: "",
-};
+function getEmptyForm() {
+  return {
+    company: "",
+    position: "",
+    location: "",
+    jobType: "Internship",
+    status: "Applied",
+    applicationDate: todayISO(),
+    deadline: "",
+    jobUrl: "",
+    notes: "",
+  };
+}
 
 function ApplicationForm({ initialData, prefill, onSubmit, onCancel }) {
   const [formData, setFormData] = useState(
-    initialData || { ...emptyForm, ...prefill }
+    () => initialData || { ...getEmptyForm(), ...prefill }
   );
   const [errors, setErrors] = useState({});
   const firstFieldRef = useRef(null);
@@ -33,6 +37,10 @@ function ApplicationForm({ initialData, prefill, onSubmit, onCancel }) {
     const newErrors = {};
     if (!formData.company.trim()) newErrors.company = "Company is required";
     if (!formData.position.trim()) newErrors.position = "Position is required";
+    const url = formData.jobUrl.trim();
+    if (url && !isHttpUrl(url)) {
+      newErrors.jobUrl = "Enter a full link starting with http:// or https://";
+    }
     return newErrors;
   }
 
@@ -43,8 +51,8 @@ function ApplicationForm({ initialData, prefill, onSubmit, onCancel }) {
       setErrors(validationErrors);
       return;
     }
-    onSubmit(formData);
-    setFormData(emptyForm);
+    onSubmit({ ...formData, jobUrl: formData.jobUrl.trim() });
+    setFormData(getEmptyForm());
     setErrors({});
   }
 
@@ -133,7 +141,18 @@ function ApplicationForm({ initialData, prefill, onSubmit, onCancel }) {
 
         <label className="app-form-full">
           Job URL
-          <input name="jobUrl" value={formData.jobUrl} onChange={handleChange} />
+          <input
+            name="jobUrl"
+            value={formData.jobUrl}
+            onChange={handleChange}
+            placeholder="https://..."
+            aria-invalid={Boolean(errors.jobUrl)}
+          />
+          {errors.jobUrl && (
+            <span className="error-text" role="alert">
+              {errors.jobUrl}
+            </span>
+          )}
         </label>
 
         <label className="app-form-full">

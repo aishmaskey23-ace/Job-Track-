@@ -10,7 +10,7 @@ const navItems = [
   { id: "discover", label: "Discover", icon: Compass, path: "/discover" }
 ];
 
-function Sidebar({ sidebarOpen }) {
+function Sidebar({ sidebarOpen, onNavigate }) {
   return (
     <aside className={sidebarOpen ? "sidebar open" : "sidebar"}>
       <nav aria-label="Main navigation">
@@ -22,6 +22,7 @@ function Sidebar({ sidebarOpen }) {
                 <NavLink
                   to={item.path}
                   end={item.path === "/"}
+                   onClick={onNavigate}
                   className={({ isActive }) =>
                     isActive ? "sidebar-item active" : "sidebar-item"
                   }

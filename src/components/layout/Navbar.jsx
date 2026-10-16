@@ -3,6 +3,7 @@ import { Menu, Bell, Sun, Moon, Plus } from "lucide-react";
 import { useApplicationContext } from "../../context/ApplicationContext";
 import GlobalSearch from "./GlobalSearch";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 function timeAgo(iso) {
   const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
@@ -59,14 +60,14 @@ function Navbar({
         >
           <Menu size={20} aria-hidden="true" />
         </button>
-        <div className="navbar-brand">
+               <Link to="/" className="navbar-brand" aria-label="JobTrack home">
           <span className="navbar-mark" aria-hidden="true">
             <span className="mark-dot mark-dot-1" />
             <span className="mark-dot mark-dot-2" />
             <span className="mark-dot mark-dot-3" />
           </span>
-          <h5 className="navbar-logo">JobTrack</h5>
-        </div>
+          <span className="navbar-logo">JobTrack</span>
+        </Link>
       </div>
 
       <GlobalSearch />

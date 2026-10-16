@@ -4,6 +4,7 @@ import StatCard from "../components/dashboard/StatCard";
 import StatusDonut from "../components/dashboard/StatusDonut";
 import "./Dashboard.css";
 import UpcomingDeadlines from "../components/dashboard/UpcomingDeadlines";
+import { parseLocalDate } from "../utils/deadlines";
 
 function Dashboard() {
   const { applications } = useApplicationContext();
@@ -28,19 +29,30 @@ function Dashboard() {
       ? 0
       : Math.round(((stats.interview + stats.offer) / stats.total) * 100);
 
-  const monthlyActivity = useMemo(() => {
+    const monthlyActivity = useMemo(() => {
     const counts = {};
     applications.forEach((app) => {
       if (!app.applicationDate) return;
-      const month = new Date(app.applicationDate).toLocaleString("default", {
+      const key = app.applicationDate.slice(0, 7); 
+      counts[key] = (counts[key] || 0) + 1;
+    });
+
+    const keys = Object.keys(counts).sort(); 
+    const spansYears = new Set(keys.map((k) => k.slice(0, 4))).size > 1;
+
+    return keys.map((key) => {
+      const month = parseLocalDate(`${key}-01`).toLocaleString("default", {
         month: "short",
       });
-      counts[month] = (counts[month] || 0) + 1;
+      return {
+        key,
+        count: counts[key],
+        label: spansYears ? `${month} '${key.slice(2, 4)}` : month,
+      };
     });
-    return counts;
   }, [applications]);
 
-  const maxCount = Math.max(...Object.values(monthlyActivity), 1);
+  const maxCount = Math.max(...monthlyActivity.map((m) => m.count), 1);
 
   return (
     <div className="dashboard">
@@ -68,19 +80,19 @@ function Dashboard() {
       <div className="dashboard-charts">
         <div className="activity-section">
           <h2>Application Activity</h2>
-          {Object.keys(monthlyActivity).length === 0 ? (
+                  {monthlyActivity.length === 0 ? (
             <p className="empty-state-inline">No activity yet.</p>
           ) : (
             <div className="bar-chart">
-              {Object.entries(monthlyActivity).map(([month, count]) => (
-                <div className="bar-column" key={month}>
+              {monthlyActivity.map(({ key, label, count }) => (
+                <div className="bar-column" key={key}>
                   <span className="bar-count">{count}</span>
                   <div
                     className="bar"
                     style={{ height: `${(count / maxCount) * 100}%` }}
-                    title={`${count} application(s) in ${month}`}
+                    title={`${count} application(s) in ${label}`}
                   />
-                  <span className="bar-label">{month}</span>
+                  <span className="bar-label">{label}</span>
                 </div>
               ))}
             </div>

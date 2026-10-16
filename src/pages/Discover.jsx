@@ -13,7 +13,8 @@ import "./Discover.css";
 const PAGE_SIZE = 24;
 
 function Discover() {
-  const { jobs, status, error, fetchedAt, retry } = useRemoteJobs();
+const { jobs, status, isRefreshing, error, fetchedAt, retry } =
+    useRemoteJobs();
   const { applications, addApplication } = useApplicationContext();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -84,6 +85,11 @@ function Discover() {
     content = (
       <>
         {status === "error" && <ErrorState message={error} onRetry={retry} />}
+                {isRefreshing && (
+          <p className="discover-refreshing" role="status">
+            Refreshing listings...
+          </p>
+        )}
 
         <p className="discover-count" aria-live="polite">
           Showing {visibleJobs.length} of {filteredJobs.length} listings
